@@ -109,3 +109,24 @@ GROUP BY
 	TO_CHAR(s.sale_date, 'YYYY-MM')
 ORDER BY 
 	selling_month;
+
+WITH first_purchases AS ( -- покупатели, первая покупка которых была с акционным товаром, файл special_offer
+    SELECT 
+        s.customer_id,
+        s.sale_date,
+        s.sales_person_id,
+        s.product_id,
+        ROW_NUMBER() OVER (PARTITION BY s.customer_id ORDER BY s.sale_date) AS rn
+    FROM sales s
+)
+SELECT 
+    c.first_name || ' ' || c.last_name AS customer,
+    fp.sale_date,
+    e.first_name || ' ' || e.last_name AS seller
+FROM first_purchases fp
+JOIN customers c ON c.customer_id = fp.customer_id
+JOIN employees e ON e.employee_id = fp.sales_person_id
+JOIN products p ON p.product_id = fp.product_id
+WHERE fp.rn = 1
+  AND p.price = 0
+ORDER BY c.customer_id;
