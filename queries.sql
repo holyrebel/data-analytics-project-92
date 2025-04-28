@@ -75,3 +75,23 @@ JOIN employees e ON e.employee_id = s.sales_person_id
 JOIN products p ON p.product_id = s.product_id
 GROUP BY e.first_name, e.last_name, MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1
 ORDER BY MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1;
+
+WITH age_category_t AS ( -- подсчет клиентов разных возрастных групп
+	SELECT 
+		CASE
+			WHEN age BETWEEN 16 AND 25 THEN '16-25'
+			WHEN age BETWEEN 26 AND 40 THEN '26-40'
+			WHEN age > 40 THEN '40+'
+		END AS age_category,
+		customer_id
+	FROM customers
+	)
+SELECT 
+	age_category, 
+	COUNT(customer_id) AS age_count
+FROM 
+	age_category_t
+GROUP BY 
+	age_category
+ORDER BY
+	age_category;
