@@ -57,3 +57,21 @@ WHERE
     )
 ORDER BY 
     average_income;
+
+SELECT -- выручка каждого продавца по дням недели, файл day_of_the_week_income
+    e.first_name || ' ' || e.last_name AS seller,
+    case MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1
+        WHEN 7 THEN 'sunday'
+        WHEN 1 THEN 'monday'
+        WHEN 2 THEN 'tuesday'
+        WHEN 3 THEN 'wednesday'
+        WHEN 4 THEN 'thursday'
+        WHEN 5 THEN 'friday'
+        WHEN 6 THEN 'saturday'
+    END AS day_of_week,
+    ROUND(SUM(p.price * s.quantity), 0) AS income
+FROM sales s
+JOIN employees e ON e.employee_id = s.sales_person_id
+JOIN products p ON p.product_id = s.product_id
+GROUP BY e.first_name, e.last_name, MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1
+ORDER BY MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1;
