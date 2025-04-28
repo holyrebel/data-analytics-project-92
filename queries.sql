@@ -95,3 +95,17 @@ GROUP BY
 	age_category
 ORDER BY
 	age_category;
+
+SELECT --  количество уникальных покупателей и выручка, которую они принесли за каждый месяц
+	TO_CHAR(s.sale_date, 'YYYY-MM') AS selling_month,
+	COUNT(s.customer_id) AS total_customers,
+	SUM(s.quantity * p.price) AS income
+FROM 
+	sales AS s
+INNER JOIN
+	products AS p
+	ON s.product_id = p.product_id
+GROUP BY 
+	TO_CHAR(s.sale_date, 'YYYY-MM')
+ORDER BY 
+	selling_month;
