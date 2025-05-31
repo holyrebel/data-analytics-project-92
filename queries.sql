@@ -18,7 +18,7 @@ ORDER by
 	income desc
 limit 10;
 
-WITH total_income AS ( -- продавцы, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам, файл lowest_average_income
+WITH total_income AS ( -- продавцы, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам файл lowest_average_income
     SELECT 
         s.sales_person_id,
         e.first_name || ' ' || e.last_name AS seller,
@@ -37,7 +37,7 @@ average_tab AS (
     SELECT 
         sales_person_id,
         seller,
-        ROUND(AVG(income / operations), 0) AS average_income
+        FLOOR(AVG(income / operations)) AS average_income
     FROM 
         total_income
     GROUP BY 
