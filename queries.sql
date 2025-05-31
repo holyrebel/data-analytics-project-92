@@ -1,3 +1,4 @@
+BEGIN;
 SELECT 
 	COUNT(customer_id) AS customers_count -- подсчёт количества покупателей, файл customers_count
 FROM customers;
@@ -131,3 +132,4 @@ JOIN products p ON p.product_id = fp.product_id
 WHERE fp.rn = 1
   AND p.price = 0
 ORDER BY c.customer_id;
+COMMIT;
