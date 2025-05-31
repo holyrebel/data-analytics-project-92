@@ -5,7 +5,7 @@ FROM customers;
 SELECT -- отчет о десятке лучших продавцов, файл top_10_total_income
     e.first_name || ' ' || e.last_name AS seller,
     COUNT(s.sales_person_id) AS operations, 
-    SUM(s.quantity * p.price) AS income
+    FLOOR(SUM(s.quantity * p.price)) AS income
 FROM 
     sales AS s
 INNER JOIN 
