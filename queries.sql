@@ -58,7 +58,7 @@ WHERE
 ORDER BY 
     average_income;
 
-SELECT -- выручка каждого продавца по дням недели, файл day_of_the_week_income
+SELECT -- выручка каждого продавца по дням недели day_of_the_week_income
     e.first_name || ' ' || e.last_name AS seller,
     case MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1
         WHEN 7 THEN 'sunday'
@@ -75,6 +75,7 @@ JOIN employees e ON e.employee_id = s.sales_person_id
 JOIN products p ON p.product_id = s.product_id
 GROUP BY e.first_name, e.last_name, MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1
 ORDER BY MOD(EXTRACT(DOW FROM s.sale_date)::int + 6, 7) + 1;
+
 
 WITH age_category_t AS ( -- подсчет клиентов разных возрастных групп
 	SELECT 
