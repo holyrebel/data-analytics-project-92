@@ -69,7 +69,7 @@ SELECT -- выручка каждого продавца по дням неде�
         WHEN 5 THEN 'friday'
         WHEN 6 THEN 'saturday'
     END AS day_of_week,
-    ROUND(SUM(p.price * s.quantity), 0) AS income
+    FLOOR(SUM(p.price * s.quantity)) AS income
 FROM sales s
 JOIN employees e ON e.employee_id = s.sales_person_id
 JOIN products p ON p.product_id = s.product_id
