@@ -99,7 +99,7 @@ ORDER BY
 
 SELECT --  количество уникальных покупателей и выручка, которую они принесли за каждый месяц
 	TO_CHAR(s.sale_date, 'YYYY-MM') AS selling_month,
-	COUNT(s.customer_id) AS total_customers,
+	COUNT(DISTINCT(s.customer_id)) AS total_customers,
 	FLOOR(SUM(s.quantity * p.price)) AS income
 FROM 
 	sales AS s
