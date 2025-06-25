@@ -5,7 +5,7 @@ FROM customers;
 
 SELECT -- отчет о десятке лучших продавцов, файл top_10_total_income
     e.first_name || ' ' || e.last_name AS seller,
-    COUNT(s.sales_person_id) AS operations,
+    COUNT(s.sales_person_id) AS operations, 
     FLOOR(SUM(s.quantity * p.price)) AS income
 FROM
     sales AS s
@@ -102,7 +102,8 @@ GROUP BY
 ORDER BY
     age_category;
 
-SELECT --  количество уникальных покупателей и выручка, которую они принесли за каждый месяц
+SELECT 
+    --  количество уникальных покупателей и выручка, которую они принесли за каждый месяц
     TO_CHAR(s.sale_date, 'YYYY-MM') AS selling_month,
     COUNT(DISTINCT s.customer_id) AS total_customers,
     FLOOR(SUM(s.quantity * p.price)) AS income
