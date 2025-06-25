@@ -19,7 +19,7 @@ ORDER BY
     income DESC
 LIMIT 10;
 
-WITH total_income AS ( -- продавцы, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам файл
+WITH total_income AS ( -- продавцы c наименьшей средней выручкой
     SELECT
         s.sales_person_id,
         e.first_name || ' ' || e.last_name AS seller,
@@ -116,7 +116,7 @@ GROUP BY
 ORDER BY
     selling_month;
 
-WITH first_purchases AS ( -- покупатели, первая покупка которых была с акционным товаром, файл special_offer
+WITH first_purchases AS ( -- покупатели, первая покупка которых была по акции
     SELECT
         s.customer_id,
         s.sale_date,
