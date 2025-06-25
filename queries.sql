@@ -5,7 +5,7 @@ FROM customers;
 
 SELECT -- отчет о десятке лучших продавцов, файл top_10_total_income
     e.first_name || ' ' || e.last_name AS seller,
-    COUNT(s.sales_person_id) AS operations, 
+    COUNT(s.sales_person_id) AS operations,
     FLOOR(SUM(s.quantity * p.price)) AS income
 FROM
     sales AS s
@@ -19,7 +19,7 @@ ORDER BY
     income DESC
 LIMIT 10;
 
-WITH total_income AS ( -- продавцы, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам файл lowest_average_income
+WITH total_income AS ( -- продавцы, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам файл
     SELECT
         s.sales_person_id,
         e.first_name || ' ' || e.last_name AS seller,
