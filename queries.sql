@@ -53,9 +53,9 @@ FROM
     average_tab
 WHERE
     average_income < (
-        SELECT SUM(income) / SUM(operations)
+        SELECT SUM(t.income) / SUM(t.operations)
         FROM
-            total_income
+            total_income AS t
     )
 ORDER BY
     average_income;
